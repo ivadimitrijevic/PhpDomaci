@@ -60,8 +60,8 @@ if ($rezultat->num_rows == 0) {
                 ?>
                 </tbody>
             </table>
-            <div class="row justify-content-between">
-                <a href="Instruktori.php">Pogledaj instruktore</a>
+            <div>
+                <p><a href="Instruktori.php">Pogledaj instruktore</a></p>
             </div>
 
         </div>

@@ -31,10 +31,14 @@ class Instruktor
         return $conn->query($query);
     }
 
-    public static function deleteById(Instruktor $instruktor, mysqli $conn)
+    public static function deleteById($id, mysqli $conn)
     {
-        $query = "DELETE FROM instruktor WHERE id=$instruktor->id";
-        return $conn->query($query);
+        $query = "DELETE FROM instruktor WHERE id=$id";
+        if ($conn->query($query) === TRUE) {
+            echo "Instruktor izbrisan";
+        } else {
+            echo "Nije moguce izbrisati insturktora";
+        }
     }
 
     public static function update(Instruktor $instruktor, mysqli $conn)
