@@ -41,9 +41,9 @@ class Instruktor
         }
     }
 
-    public static function update(Instruktor $instruktor, mysqli $conn)
+    public function update(mysqli $conn)
     {
-        $query = "UPDATE instruktor SET ime=$instruktor->ime, prezime=$instruktor->prezime, godina_rada=$instruktor->godina_rada, planina_id= $instruktor->planina_id WHERE id=$instruktor->id";
+        $query = "UPDATE instruktor SET `ime`=$this->ime, prezime=$this->prezime, godina_rada=$this->godina_rada, planina_id= $this->planina_id WHERE instruktor.id=$this->id";
         return $conn->query($query);
     }
 

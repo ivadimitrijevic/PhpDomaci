@@ -11,4 +11,3 @@ if ($conn->connect_errno) {
         "Neuspesna konekcija: $conn->connect_error err kod $con->connect_errno"
     );
 }
-?>

@@ -2,12 +2,16 @@
 
 require 'dbBroker.php';
 require 'model/planina.php';
+require 'model/korisnik.php';
 
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     header('Location: index.php');
     exit();
 }
+
+$id = $_SESSION['id'];
+$user = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM korisnik WHERE id=$id"));
 
 $rezultat = Planina::getAll($conn);
 if (!$rezultat) {
@@ -18,6 +22,9 @@ if ($rezultat->num_rows == 0) {
     echo 'Nema planina!';
     die();
 } else {
+
+
+
 ?>
 
     <!DOCTYPE html>
@@ -31,11 +38,31 @@ if ($rezultat->num_rows == 0) {
         <link rel="stylesheet" type="text/css" href="css/home.css">
         <title>Planine</title>
 
+
+        <?php
+        $cookie_name = "user";
+        $cookie_value = $user['korisnicko_ime'];
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        ?>
     </head>
 
     <body>
-
-
+        <div class="row">
+            <div class="col-sm-6">
+                <p style="margin-left:10px;"><?php
+                                                if (isset($_COOKIE[$cookie_name])) {
+                                                    echo "Dobrodosli nazad, " . " " . $cookie_value;
+                                                } else {
+                                                    echo "Dobrodosao nazad.";
+                                                }
+                                                ?>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <p style="text-align: right; margin-right:10px"><a href="logout.php">Izloguj se</a>
+                </p>
+            </div>
+        </div>
         <div class="jumbotron" style="color: black;">
             <h1>Skijalista Srbije</h1>
         </div>
@@ -61,7 +88,7 @@ if ($rezultat->num_rows == 0) {
                 </tbody>
             </table>
             <div>
-                <p><a href="Instruktori.php">Pogledaj instruktore</a></p>
+                <p style="text-align:center"><a href="Instruktori.php">Pogledaj instruktore</a></p>
             </div>
 
         </div>
@@ -69,8 +96,6 @@ if ($rezultat->num_rows == 0) {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-
-
 
     </body>
 

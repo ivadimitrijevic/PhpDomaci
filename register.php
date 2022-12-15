@@ -1,12 +1,3 @@
-<?php
-
-session_start();
-if (isset($_SESSION['id'])) {
-    header('Location: home.php');
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,24 +5,26 @@ if (isset($_SESSION['id'])) {
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <title>Skijaška sezona</title>
+
 </head>
 
 <body>
-    <h1>Uloguj se</h1>
+    <h1>Registracija</h1>
     <div class="login-form">
         <div class="container">
-            <input type="hidden" id="action" value="login">
+            <input type="hidden" id="action" value="register">
             <label>Korisnik</label>
             <input type="text" id="username" name="username" class="form-control" required>
             <br><br><br>
             <label>Lozinka</label>
             <input type="text" id="password" name="password" class="form-control" required>
             <br><br><br>
-            <button class="btn btn-primary" name="submit" onclick="submitData();">Prijavi se</button>
+            <button class="btn btn-primary" name="submit" onclick="submitData();">Registruj se</button>
         </div>
-
     </div>
-    <p><a href="register.php">Registruj se</a></p>
+    <p>
+        <a href="index.php">Vrati se na logovanje</a>
+    </p>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         function submitData() {
@@ -43,13 +36,12 @@ if (isset($_SESSION['id'])) {
                 };
 
                 $.ajax({
-                    url: "model/login.php",
+                    url: "./model/login.php",
                     type: 'post',
                     data: data,
                     success: function(response) {
                         alert(response);
-
-                        if (response == "Prijava uspesna!") {
+                        if (response == "Registracija uspesna!") {
                             window.location.reload();
                         }
                     }
